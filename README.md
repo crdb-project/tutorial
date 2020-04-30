@@ -1,4 +1,4 @@
-# ![CRDB](https://lpsc.in2p3.fr/crdb-dev/crdb_logo.svg) Tutorial
+# <img height=25em src="https://lpsc.in2p3.fr/crdb-dev/img/crdb_logo.svg"/> Tutorial
 
 Welcome to the [CRDB](https://lpsc.in2p3.fr/crdb) tutorial.
 
