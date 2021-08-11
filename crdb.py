@@ -6,10 +6,10 @@ import warnings
 def query(num, den=None, energy_type="R", url=None, **kwargs):
     """
     Queries the CRDB and returns the table as a numpy array.
-    
+
     Parameters are passed as keywords directly to this function. All values are
     case insensitive.
-    
+
     Parameters
     ----------
     num: str
@@ -19,7 +19,7 @@ def query(num, den=None, energy_type="R", url=None, **kwargs):
     url: str (optional, default: None)
         URL to send the request to, defaults to the standard url. This is an expert
         option, users do not need to change this.
-    kwargs: 
+    kwargs:
         Other keyword-value pairs are interpreted as parameters for the query.
         See http://lpsc.in2p3.fr/crdb for a documentation which parameters are accepted.
 
@@ -32,7 +32,7 @@ def query(num, den=None, energy_type="R", url=None, **kwargs):
     # "+" must be escaped in URL, see
     # https://en.wikipedia.org/wiki/Percent-encoding
     if num.lower() == "e+":
-        num = "e%2B"
+        num = r"e%2B"
 
     # workaround for empty error message from CRDB
     valid_energy_types = ("EKN", "EK", "R", "ETOT")
@@ -77,31 +77,3 @@ def query(num, den=None, energy_type="R", url=None, **kwargs):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         return np.genfromtxt(data, fields)
-
-
-def test_query():
-    import pytest
-
-    tab = query("H")
-    assert len(tab) > 1
-
-    tab = query("e+")
-    assert len(tab) > 1
-
-    tab = query("e-")
-    assert len(tab) > 1
-
-    tab = query("B", "C")
-    assert len(tab) > 1
-
-    with pytest.raises(ValueError):
-        query("Foobar")
-
-    with pytest.raises(ValueError):
-        query("H", energy_type="Foobar")
-
-
-if __name__ == "__main__":
-    import pytest
-
-    pytest.main([__file__])
