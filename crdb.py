@@ -4,8 +4,284 @@ import warnings
 import cachier
 import datetime
 
+# from "Submit data" tab on CRDB website
+VALID_NAMES = (
+    "H",
+    "He",
+    "Li",
+    "Be",
+    "B",
+    "C",
+    "N",
+    "O",
+    "F",
+    "Ne",
+    "Na",
+    "Mg",
+    "Al",
+    "Si",
+    "P",
+    "S",
+    "Cl",
+    "Ar",
+    "K",
+    "Ca",
+    "Sc",
+    "Ti",
+    "V",
+    "Cr",
+    "Mn",
+    "Fe",
+    "Co",
+    "Ni",
+    "Cu",
+    "Zn",
+    "Ga",
+    "Ge",
+    "As",
+    "Se",
+    "Br",
+    "Kr",
+    "Rb",
+    "Sr",
+    "Y",
+    "Zr",
+    "Nb",
+    "Mo",
+    "Tc",
+    "Ru",
+    "Rh",
+    "Pd",
+    "Ag",
+    "Cd",
+    "In",
+    "Sn",
+    "Sb",
+    "Te",
+    "I",
+    "Xe",
+    "Cs",
+    "Ba",
+    "La",
+    "Ce",
+    "Pr",
+    "Nd",
+    "Pm",
+    "Sm",
+    "Eu",
+    "Gd",
+    "Tb",
+    "Dy",
+    "Ho",
+    "Er",
+    "Tm",
+    "Yb",
+    "Lu",
+    "Hf",
+    "Ta",
+    "W",
+    "Re",
+    "Os",
+    "Ir",
+    "Pt",
+    "Au",
+    "Hg",
+    "Tl",
+    "Pb",
+    "Bi",
+    "Po",
+    "At",
+    "Rn",
+    "Fr",
+    "Ra",
+    "Ac",
+    "Th",
+    "Pa",
+    "U",
+    "Np",
+    "Pu",
+    "Am",
+    "Cm",
+    "Bk",
+    "Cf",
+    "Es",
+    "Zgeq1",
+    "Zgeq2",
+    "Zgeq3",
+    "Zgeq4",
+    "Zgeq5",
+    "Zgeq6",
+    "Zgeq7",
+    "Zgeq8",
+    "H-bar",
+    "He-bar",
+    "Li-bar",
+    "Be-bar",
+    "B-bar",
+    "C-bar",
+    "N-bar",
+    "O-bar",
+    "Zgeq1-bar",
+    "Zgeq2-bar",
+    "Zgeq3-bar",
+    "Zgeq4-bar",
+    "Zgeq5-bar",
+    "Zgeq6-bar",
+    "Zgeq7-bar",
+    "Zgeq8-bar",
+    "1H-bar",
+    "2H-bar",
+    "3He-bar",
+    "4He-bar",
+    "6Li-bar",
+    "9Be-bar",
+    "11B-bar",
+    "12C-bar",
+    "14N-bar",
+    "16O-bar",
+    "e-",
+    "e+",
+    "NU_E",
+    "NU_M",
+    "NU_T",
+    "GAMMA",
+    "e-+e+",
+    "SubFe",
+    "1H",
+    "2H",
+    "3He",
+    "4He",
+    "6Li",
+    "7Li",
+    "7Be",
+    "9Be",
+    "10B",
+    "10Be",
+    "11B",
+    "12C",
+    "13C",
+    "14N",
+    "14C",
+    "15N",
+    "16O",
+    "17O",
+    "18O",
+    "19F",
+    "20Ne",
+    "21Ne",
+    "22Ne",
+    "23Na",
+    "24Mg",
+    "25Mg",
+    "26Mg",
+    "26Al",
+    "27Al",
+    "28Si",
+    "29Si",
+    "30Si",
+    "31P",
+    "32S",
+    "33S",
+    "34S",
+    "35Cl",
+    "36S",
+    "36Ar",
+    "36Cl",
+    "37Cl",
+    "37Ar",
+    "38Ar",
+    "39K",
+    "40Ar",
+    "40Ca",
+    "40K",
+    "41K",
+    "41Ca",
+    "42Ca",
+    "43Ca",
+    "44Ca",
+    "44Ti",
+    "45Sc",
+    "46Ti",
+    "46Ca",
+    "47Ti",
+    "48Ti",
+    "48Ca",
+    "48Cr",
+    "49Ti",
+    "49V",
+    "50Ti",
+    "50Cr",
+    "50V",
+    "51V",
+    "51Cr",
+    "52Cr",
+    "53Cr",
+    "53Mn",
+    "54Cr",
+    "54Fe",
+    "54Mn",
+    "55Mn",
+    "55Fe",
+    "56Fe",
+    "56Ni",
+    "57Fe",
+    "57Co",
+    "58Fe",
+    "58Ni",
+    "59Co",
+    "59Ni",
+    "60Ni",
+    "60Fe",
+    "61Ni",
+    "62Ni",
+    "63Cu",
+    "64Ni",
+    "64Zn",
+    "65Cu",
+    "66Zn",
+    "67Zn",
+    "68Zn",
+    "70Zn",
+    "H-He-group",
+    "N-group",
+    "O-group",
+    "Al-group",
+    "Si-group",
+    "Fe-group",
+    "O-Fe-group",
+    "C-Fe-group",
+    "AllParticles",
+    "<LnA>",
+    "<X_max>",
+    "X_mu_max",
+    "<rho_mu_600>",
+    "<rho_mu_800>",
+    "<R_mu>",
+    "LS-group",
+    "HS-group",
+    "Pt-group",
+    "Pb-group",
+    "Subactinides",
+    "Actinides",
+    "Z_33-34",
+    "Z_35-36",
+    "Z_37-38",
+    "Z_39-40",
+    "Z_41-42",
+    "Z_43-44",
+    "Z_45-46",
+    "Z_47-48",
+    "Z_49-50",
+    "Z_51-52",
+    "Z_53-54",
+    "Z_55-56",
+    "Z_57-58",
+    "Z_59-60",
+    "Zgeq70",
+    "9Be+10Be",
+)
 
-@cachier.cachier(stale_after=datetime.timedelta(days=30))
+
 def query(
     num: str,
     den: str = "",
@@ -28,7 +304,6 @@ def query(
     Query CRDB and return table as a numpy array.
 
     See http://lpsc.in2p3.fr/crdb for documentation which parameters are accepted.
-    All string values are case insensitive.
 
     Parameters
     ----------
@@ -143,8 +418,9 @@ def _url(
 
     # "+" must be escaped in URL, see
     # https://en.wikipedia.org/wiki/Percent-encoding
-    if num.lower() == "e+":
-        num = r"e%2B"
+    num = num.replace("+", "%2B")
+    if den:
+        den = den.replace("+", "%2B")
 
     # workaround for empty error message from CRDB
     valid_energy_types = ("EKN", "EK", "R", "ETOT", "ETOTN")
@@ -195,7 +471,8 @@ def _url(
     )
 
 
-def _load(url, timeout):
+@cachier.cachier(stale_after=datetime.timedelta(days=30))
+def _server_request(url, timeout):
     # if there is a timeout error, we hide original long traceback from the internal
     # libs and instead show a simple traceback
     try:
@@ -209,6 +486,12 @@ def _load(url, timeout):
         raise TimeoutError(
             f"Server did not respond within timeout={timeout} to url={url}"
         )
+
+    return data
+
+
+def _load(url, timeout):
+    data = _server_request(url, timeout)
 
     # check for errors and display them
     if len(data) == 1:
@@ -241,4 +524,39 @@ def _load(url, timeout):
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        return np.genfromtxt(data, fields)
+        table = np.genfromtxt(data, fields)
+
+    # workaround: replace &amp; in sub_exp strings
+    sub_exps = np.unique(table["sub_exp"])
+    code = "&amp;"
+    for sub_exp in sub_exps:
+        if code not in sub_exp:
+            continue
+        mask = table["sub_exp"] == sub_exp
+        table["sub_exp"][mask] = sub_exp.replace(code, "&")
+    return table
+
+
+def experiment_masks(table):
+    """
+    Generate masks which select all points from each experiment.
+
+    This returns a dict which maps the experiment name to the mask. Different data taking
+    campains are joined.
+    """
+    # generate a mask per experiment, see `CRDB REST query tutorial.ipynb` for details
+    experiments = {}
+    for this_sub_exp in np.unique(table["sub_exp"]):
+        exp = this_sub_exp[: this_sub_exp.find("(")]
+        mask = table["sub_exp"] == this_sub_exp
+        exp_mask = experiments.get(exp, False)
+        exp_mask |= mask
+        experiments[exp] = exp_mask
+    return experiments
+
+
+def clear_cache():
+    """
+    Delete the local CRDB cache.
+    """
+    _server_request.clear_cache()
