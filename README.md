@@ -1,5 +1,7 @@
 # <a href="https://lpsc.in2p3.fr/crdb"><img height=30em src="https://lpsc.in2p3.fr/crdb/img/crdb_logo.svg"/></a> Tutorial
 
-Welcome to the [CRDB](https://lpsc.in2p3.fr/crdb) tutorial.
+Welcome to the [CRDB](https://lpsc.in2p3.fr/crdb) tutorial repository.
 
-Our basic [REST tutorial](./CRDB%20REST%20query%20tutorial.ipynb) shows how to use the REST interface to CRDB. You can use this from the command-line with the commands `wget` or `curl`. Or you can query the database from a program, for example, a Python script. [A simple Python3 module to query](./crdb.py) the database and return the data as a numpy array is included in this repository.
+Our basic [tutorial](./tutorial.ipynb) shows how to use CRDB via the low-level REST interface or via the high-level Python package `crdb`.
+
+Our [gallery](./gallery.ipynb) shows how to make standard plots in Python with CRDB data using the high-level Python package `crdb`.
