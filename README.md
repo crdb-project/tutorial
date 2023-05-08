@@ -6,7 +6,7 @@ Our basic [tutorial](./tutorial.ipynb) shows how to use CRDB via the low-level R
 
 Our [gallery](./gallery.ipynb) shows how to make standard plots in Python with CRDB data using the high-level Python package `crdb`.
 
-![](low_energy_fluxes.svg)
+![](low_energy_fluxes.png)
 ![](fluxes.svg)
 ![](hecr_composition.svg)
 ![](cosmic_ray_vs_solar_abundances.svg)
