@@ -4,3 +4,4 @@ db.txt
 __pycache__
 .pytest_cache
 2023-01_CRDB_Plots.pdf
+.ruff_cache
