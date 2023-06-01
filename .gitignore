@@ -5,3 +5,7 @@ __pycache__
 .pytest_cache
 2023-01_CRDB_Plots.pdf
 .ruff_cache
+nm_counts.dat
+phi_Ghelfi17.dat
+phi_Usoskin05.dat
+phi_Usoskin17.dat
