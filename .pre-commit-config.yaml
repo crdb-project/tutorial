@@ -5,14 +5,14 @@
 exclude: '^(\.tox|ci/templates|\.bumpversion\.cfg)(/|$)'
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.6.0
     hooks:
       - id: trailing-whitespace
         exclude: .*\.svg
       - id: end-of-file-fixer
       - id: debug-statements
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.7.0
+    rev: 1.8.5
     hooks:
       - id: nbqa-black
       - id: nbqa-ruff
